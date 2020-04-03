@@ -17,7 +17,7 @@ model: any = {}
     this.authSerice.login(this.model).subscribe(next => {
       console.log('login in successfully');
     }, error =>{
-      console.log('fail to login');
+      console.log(error);
     });
   }
 
