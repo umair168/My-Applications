@@ -19,6 +19,9 @@ using System.Net;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using DatingApp.API.Helpers;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
+using AutoMapper;
 
 namespace DatingApp.API
 {
@@ -29,28 +32,33 @@ namespace DatingApp.API
             Configuration = configuration;
         }
 
+
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
-        .ConfigureApiBehaviorOptions(o => { o.SuppressModelStateInvalidFilter = true; });
+            .ConfigureApiBehaviorOptions(o => { o.SuppressModelStateInvalidFilter = true; });
             services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
             services.AddCors();
+            services.AddAutoMapper(typeof(DatingRepository).Assembly);
             services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<IDatingRepository, DatingRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options => {
+                .AddJwtBearer(options =>
+                {
                     options.TokenValidationParameters =
                         new TokenValidationParameters
                         {
-                         ValidateIssuerSigningKey = true,
-                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.
+                            ValidateIssuerSigningKey = true,
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.
                          GetBytes(Configuration.GetSection("AppSettings:Token").Value))
                          ,
-                         ValidateIssuer = false,
-                         ValidateAudience = false
+                            ValidateIssuer = false,
+                            ValidateAudience = false
                         };
                 });
         }
@@ -63,7 +71,8 @@ namespace DatingApp.API
                 app.UseDeveloperExceptionPage();
             }
             {
-                app.UseExceptionHandler(builder=> {
+                app.UseExceptionHandler(builder =>
+                {
                     builder.Run(async context =>
                     {
                         context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
