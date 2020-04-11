@@ -6,24 +6,29 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
-  styleUrls: ['./nav.component.css']
+  styleUrls: ['./nav.component.css'],
 })
 export class NavComponent implements OnInit {
   model: any = {};
+  photoUrl: string;
   constructor(
     public authSerice: AuthService,
     private alertify: AlertifyService,
     private router: Router
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.authSerice.currentPhotoUrl.subscribe(
+      (photoUrl) => (this.photoUrl = photoUrl)
+    );
+  }
 
   login() {
     this.authSerice.login(this.model).subscribe(
-      next => {
+      (next) => {
         this.alertify.success('login in successfully');
       },
-      error => {
+      (error) => {
         this.alertify.error(error);
       },
       () => {
@@ -37,6 +42,9 @@ export class NavComponent implements OnInit {
   }
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    this.authSerice.decodedToken = null;
+    this.authSerice.currentUser = null;
     this.alertify.message('logged out');
     this.router.navigate(['/home']);
   }
