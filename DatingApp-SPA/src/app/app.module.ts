@@ -6,6 +6,7 @@ import { BsDropdownModule, TabsModule } from 'ngx-bootstrap';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
+import {TimeagoModule } from 'ngx-timeago';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -60,6 +61,7 @@ export function tokenGetter() {
     BsDatepickerModule.forRoot(),
     TabsModule.forRoot(),
     BrowserAnimationsModule,
+    TimeagoModule.forRoot(),
     RouterModule.forRoot(appRouts),
     NgxGalleryModule,
     FileUploadModule,
