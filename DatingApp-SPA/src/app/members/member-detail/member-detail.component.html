@@ -29,21 +29,21 @@
           <div>
             <strong>
               Member since :
-              <p>{{ user.created | date : 'mediumDate' }}</p>
+              <p>{{ user.created | date: "mediumDate" }}</p>
             </strong>
           </div>
         </div>
         <div class="card-footer">
           <div class="btn-group d-flex">
             <button class="btn btn-primary w-100">Like</button>
-            <button class="btn btn-success w-100">Message</button>
+            <button class="btn btn-success w-100" (click)="selectTab(3)">Message</button>
           </div>
         </div>
       </div>
     </div>
     <div class="col-sm-8">
       <div class="tab-panel">
-        <tabset class="member-tabset">
+        <tabset class="member-tabset" #memberTabs>
           <tab heading="About {{ user.knownAs }}">
             <h4>
               Description
@@ -59,10 +59,13 @@
             <p>{{ user.interests }}</p>
           </tab>
           <tab heading="Photos">
-            <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+            <ngx-gallery
+              [options]="galleryOptions"
+              [images]="galleryImages"
+            ></ngx-gallery>
           </tab>
           <tab heading="Message">
-            <p>messages will go here</p>
+            <app-member-messages [recipientId]="user.id"> </app-member-messages>
           </tab>
         </tabset>
       </div>

@@ -20,7 +20,7 @@ import {
 } from './_services/error.interceptor';
 import { MemberListComponent } from './members/member-list/member-list.component';
 import { ListsComponent } from './lists/lists.component';
-import { MessagesComponent } from './Messages/Messages.component';
+import { MessagesComponent } from './messages/messages.component';
 import { appRouts } from './routes';
 import { MemberCardComponent } from './members/member-card/member-card.component';
 import { JwtModule } from '@auth0/angular-jwt';
@@ -33,7 +33,9 @@ import { MemberEditResolver } from './_resolvers/member-edit.resolver';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guards';
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 import { FileUploadModule } from 'ng2-file-upload';
-import { ListResolver } from './_resolvers/lists-resolver';
+import { ListResolver } from './_resolvers/lists.resolver';
+import { MessagesResolver } from './_resolvers/messages.resolver';
+import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -51,6 +53,7 @@ export function tokenGetter() {
     MemberCardComponent,
     MemberDetailComponent,
     MemberEditComponent,
+    MemberMessagesComponent,
     PhotoEditorComponent
   ],
   imports: [
@@ -82,6 +85,7 @@ export function tokenGetter() {
     MemberListResolver,
     MemberEditResolver,
     ListResolver,
+    MessagesResolver,
     PreventUnsavedChanges
   ],
   bootstrap: [AppComponent],
