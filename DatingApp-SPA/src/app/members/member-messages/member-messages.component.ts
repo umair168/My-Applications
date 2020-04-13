@@ -31,6 +31,7 @@ export class MemberMessagesComponent implements OnInit {
       .getMessageThread(this.authService.decodedToken.nameid, this.recipientId)
       .pipe(
         tap((messages) => {
+          // tslint:disable-next-line: prefer-for-of
           for (let i = 0; i < messages.length; i++) {
             if (
               messages[i].isRead === false &&
