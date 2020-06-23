@@ -1,4 +1,4 @@
-# My-Applications
+# Dating Application
 Sample dating application with Asp.net core 3.0 application with angular 9.1 and Bootstrap v4.4.1
 
 1.Download the application
