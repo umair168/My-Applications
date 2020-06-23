@@ -3,7 +3,7 @@ Sample dating application with Asp.net core 3.0 application with angular 9.1 and
 
 1.Download the application
 
-2.Go to DatingApp-SPA folder and run command npm install to restore angularjs packages
+2.Go to DatingApp-SPA folder and run command npm install to restore angular packages
 
 3.Go to DatingApp.API and restore nuget packages
 
